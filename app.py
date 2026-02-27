@@ -15,7 +15,7 @@ def wordfind():
     else:
         defresults.config(text = data[0]["meanings"][0]["definitions"][-1]["definition"])
 
-
+#
 def thesfind():
     word = wordentry.get()
     response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
