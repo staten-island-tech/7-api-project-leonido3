@@ -8,12 +8,13 @@ def wordfind():
         defresults.config(text="Error fetching data! ")
         return 
     data = response.json()
-    if len(data[0]["meanings"]) > 1:
-        defresults.config(text = data[0]["meanings"][1]["definitions"][0]["definition"])
-    elif len(data[0]["meanings"][0]["definitions"]) > 1:
-        defresults.config(text = data[0]["meanings"][0]["definitions"][0]["definition"])
-    else:
-        defresults.config(text = data[0]["meanings"][0]["definitions"][-1]["definition"])
+    define = []
+    for entry in data:
+        for meaning in entry["meanings"]:
+            for d in meaning["definitions"]:
+                define.append(d["definition"])
+    defresults.config(text=f"The definitions are: {", ".join(define)}")
+
 
 def thesfind():
     thesresultsan = []
@@ -21,7 +22,7 @@ def thesfind():
     word = wordentry.get()
     response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word.lower()}")
     if response.status_code != 200:
-        defresults.config(text="Error fetching data! ")
+        theslist.config(text="Error fetching data! ")
     data = response.json()
     for x in data:
         for meaning in x["meanings"]:
@@ -73,7 +74,7 @@ defresults = tk.Label(results_frame, text=" ")
 defresults.grid(row=4, column=0, pady=20)
 
 theslist = tk.Label(results_frame, text=" ")
-theslist.grid(row=4, column=1, pady=20)
+theslist.grid(row=5, column=0, pady=20)
 
 donebutton = ttk.Button(window, text=("Done"), command=done)
 donebutton.grid(row=5, column=0, pady=10)
