@@ -9,10 +9,9 @@ def wordfind():
         return 
     data = response.json()
     define = []
-    for entry in data:
-        for meaning in entry["meanings"]:
-            for d in meaning["definitions"]:
-                define.append(d["definition"])
+    for meaning in range(3):
+        for i in meaning["definitions"]:
+            define.append(i["definition"])
     defresults.config(text=f"The definitions are: {", ".join(define)}")
 
 
